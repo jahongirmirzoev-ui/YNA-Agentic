@@ -1,0 +1,103 @@
+{
+  "tracking": {
+    "enabled": true,
+    "idle_threshold_seconds": 300,
+    "session_timeout_seconds": 1800,
+    "track_file_content": false,
+    "exclude_patterns": [
+      "*.env*",
+      "*credentials*",
+      "*secrets*",
+      "*/node_modules/*",
+      "*/.git/*",
+      "*.pyc",
+      "__pycache__/*"
+    ]
+  },
+  "storage": {
+    "database_path": ".tmp/activity-tracking.db",
+    "jsonl_log_dir": ".tmp/activity-logs",
+    "retention_days_local": 90,
+    "retention_days_jsonl": 365,
+    "compress_after_days": 7
+  },
+  "department_detection": {
+    "rules": [
+      {
+        "pattern": "business-knowledge/departments/marketing/*",
+        "department": "Marketing"
+      },
+      {
+        "pattern": "business-knowledge/departments/sales/*",
+        "department": "Sales"
+      },
+      {
+        "pattern": "business-knowledge/departments/customer-service/*",
+        "department": "Customer Service"
+      },
+      {
+        "pattern": "business-knowledge/departments/crm/*",
+        "department": "CRM"
+      },
+      {
+        "pattern": "business-knowledge/departments/website/*",
+        "department": "Website"
+      },
+      {
+        "pattern": "business-knowledge/api-integrations/makecom/*",
+        "department": "Make.com Integration"
+      },
+      {
+        "pattern": "business-knowledge/api-integrations/clay/*",
+        "department": "Clay Integration"
+      },
+      {
+        "pattern": "business-knowledge/api-integrations/airtable/*",
+        "department": "Airtable Integration"
+      },
+      {
+        "pattern": "business-knowledge/api-integrations/*",
+        "department": "API Integrations"
+      },
+      {
+        "pattern": "scripts/*",
+        "department": "Automation"
+      },
+      {
+        "pattern": "config/*",
+        "department": "Configuration"
+      },
+      {
+        "pattern": "directives/*",
+        "department": "Documentation"
+      },
+      {
+        "pattern": "docs/*",
+        "department": "Documentation"
+      },
+      {
+        "pattern": "execution/*",
+        "department": "Execution"
+      },
+      {
+        "pattern": "cloud-sync/*",
+        "department": "Cloud Sync"
+      }
+    ],
+    "default_department": "General"
+  },
+  "summaries": {
+    "daily_enabled": true,
+    "weekly_enabled": true,
+    "monthly_enabled": false,
+    "ai_powered": true,
+    "ai_model": "claude-sonnet-4-5-20250929",
+    "fallback_to_template": true
+  },
+  "notion_sync": {
+    "enabled": false,
+    "database_name": "Work Sessions Tracker",
+    "sync_frequency": "daily",
+    "sync_time": "23:59"
+  }
+}

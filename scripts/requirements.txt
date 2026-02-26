@@ -1,0 +1,22 @@
+# YNA Agentic - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# API Clients
+requests==2.31.0
+python-dotenv==1.0.0
+
+# Notion Integration (for cloud sync)
+notion-client==2.2.1
+
+# Document Processing
+python-docx==1.1.0          # Read Word documents
+PyPDF2==3.0.1               # Read PDF documents
+markdown==3.5.1             # Generate markdown
+beautifulsoup4==4.12.2      # HTML parsing
+
+# Data Processing
+pandas==2.1.4               # Data manipulation (optional, for complex transformations)
+
+# Utilities
+colorama==0.4.6             # Colored terminal output
+tqdm==4.66.1                # Progress bars

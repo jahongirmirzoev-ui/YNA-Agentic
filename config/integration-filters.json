@@ -1,0 +1,152 @@
+{
+  "description": "Configuration for filtering which data to fetch from external APIs",
+  "last_updated": "2026-02-26",
+
+  "makecom": {
+    "enabled": true,
+    "organization_id": "1966188",
+    "comment_org_id": "Get from Make.com Settings -> Organization",
+
+    "filters": {
+      "include_folders": [
+        "ICP Clarity"
+      ],
+      "exclude_folders": [
+        "Archive",
+        "Testing",
+        "Client Projects"
+      ],
+      "include_tags": [
+        "YNA",
+        "production",
+        "active"
+      ],
+      "exclude_tags": [
+        "draft",
+        "archived"
+      ]
+    },
+
+    "fetch_details": {
+      "scenario_structure": true,
+      "connections": true,
+      "last_execution": true,
+      "webhook_urls": false,
+      "comment": "webhook_urls set to false for security - store in .env instead"
+    }
+  },
+
+  "clay": {
+    "enabled": true,
+    "workspace_id": "",
+    "workspace_name": "YNA Agentic",
+    "comment_workspace": "Get workspace ID from Clay dashboard URL",
+
+    "filters": {
+      "include_tables": [
+        "YNA Lead Enrichment",
+        "YNA Company Research",
+        "YNA Contact Finder"
+      ],
+      "exclude_tables": [
+        "Test",
+        "Archive",
+        "Sandbox"
+      ],
+      "include_tags": [
+        "YNA",
+        "production"
+      ]
+    },
+
+    "fetch_details": {
+      "table_schema": true,
+      "enrichment_providers": true,
+      "credit_usage": true,
+      "output_destinations": true,
+      "record_count": true
+    }
+  },
+
+  "airtable": {
+    "enabled": true,
+
+    "bases": [
+      {
+        "base_id": "",
+        "base_name": "YNA CRM Main",
+        "comment": "Replace with your actual base ID (appXXXXXXXXXXXXXX)",
+        "include_tables": ["all"],
+        "exclude_tables": []
+      },
+      {
+        "base_id": "",
+        "base_name": "YNA Marketing Hub",
+        "include_tables": ["all"],
+        "exclude_tables": ["Archive", "Test Data"]
+      },
+      {
+        "base_id": "",
+        "base_name": "YNA Support",
+        "include_tables": ["Tickets", "Customer Feedback"],
+        "exclude_tables": []
+      }
+    ],
+
+    "fetch_details": {
+      "table_schemas": true,
+      "field_types": true,
+      "views": true,
+      "automations": false,
+      "record_count": true,
+      "sample_records": false,
+      "comment": "automations and sample_records disabled for performance"
+    }
+  },
+
+  "notion": {
+    "enabled": true,
+    "databases": [
+      {
+        "database_id": "${NOTION_DATABASE_MARKETING}",
+        "name": "Marketing Department",
+        "sync_to": "business-knowledge/departments/marketing/memory.md"
+      },
+      {
+        "database_id": "${NOTION_DATABASE_SALES}",
+        "name": "Sales Department",
+        "sync_to": "business-knowledge/departments/sales/memory.md"
+      },
+      {
+        "database_id": "${NOTION_DATABASE_CUSTOMER_SERVICE}",
+        "name": "Customer Service Department",
+        "sync_to": "business-knowledge/departments/customer-service/memory.md"
+      },
+      {
+        "database_id": "${NOTION_DATABASE_CRM}",
+        "name": "CRM Department",
+        "sync_to": "business-knowledge/departments/crm/memory.md"
+      },
+      {
+        "database_id": "${NOTION_DATABASE_WEBSITE}",
+        "name": "Website Department",
+        "sync_to": "business-knowledge/departments/website/memory.md"
+      }
+    ]
+  },
+
+  "update_frequency": {
+    "makecom": "daily",
+    "clay": "daily",
+    "airtable": "daily",
+    "notion": "15_minutes",
+    "comment": "Notion syncs more frequently (every 15 min), others daily"
+  },
+
+  "output_format": {
+    "markdown": true,
+    "json_backup": true,
+    "preserve_manual_edits": true,
+    "comment": "preserve_manual_edits keeps user-added content in markdown files"
+  }
+}

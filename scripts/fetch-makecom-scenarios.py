@@ -1,0 +1,310 @@
+#!/usr/bin/env python3
+"""
+Make.com Scenarios Fetcher
+Fetches scenarios from specific folders and generates documentation.
+"""
+
+import os
+import sys
+import json
+import requests
+from datetime import datetime
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Base directory
+BASE_DIR = Path(__file__).parent.parent
+CONFIG_FILE = BASE_DIR / "config" / "integration-filters.json"
+OUTPUT_FILE = BASE_DIR / "business-knowledge" / "api-integrations" / "makecom" / "scenarios" / "scenario-index.md"
+
+# Make.com API endpoints
+MAKECOM_API_BASE = "https://us1.make.com/api/v2"
+
+
+def load_config():
+    """Load integration filters configuration"""
+    with open(CONFIG_FILE, 'r') as f:
+        return json.load(f)
+
+
+def get_makecom_headers():
+    """Get headers for Make.com API requests"""
+    api_key = os.getenv('MAKECOM_API_KEY')
+    if not api_key:
+        print("❌ Error: MAKECOM_API_KEY not found in .env file")
+        sys.exit(1)
+
+    return {
+        'Authorization': f'Token {api_key}',
+        'Content-Type': 'application/json'
+    }
+
+
+def fetch_scenarios(config):
+    """Fetch scenarios from Make.com API"""
+    print("🔄 Fetching Make.com scenarios...")
+
+    headers = get_makecom_headers()
+    org_id = config['makecom'].get('organization_id')
+
+    if not org_id:
+        print("⚠️  Warning: organization_id not set in config/integration-filters.json")
+        print("   Fetching all scenarios (this may include non-YNA scenarios)")
+
+    # Fetch scenarios
+    url = f"{MAKECOM_API_BASE}/scenarios"
+    if org_id:
+        url += f"?organizationId={org_id}"
+
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        scenarios = response.json().get('scenarios', [])
+
+        print(f"✅ Found {len(scenarios)} total scenarios")
+        return scenarios
+
+    except requests.exceptions.RequestException as e:
+        print(f"❌ Error fetching scenarios: {e}")
+        return []
+
+
+def filter_scenarios(scenarios, config):
+    """Filter scenarios based on configuration"""
+    filters = config['makecom']['filters']
+    include_folders = filters.get('include_folders', [])
+    exclude_folders = filters.get('exclude_folders', [])
+    include_tags = filters.get('include_tags', [])
+    exclude_tags = filters.get('exclude_tags', [])
+
+    filtered = []
+
+    for scenario in scenarios:
+        # Get scenario folder/team
+        folder = scenario.get('folder', {}).get('name', '')
+        tags = scenario.get('tags', [])
+
+        # Skip if in exclude folders
+        if exclude_folders and folder in exclude_folders:
+            continue
+
+        # Skip if has exclude tags
+        if exclude_tags and any(tag in exclude_tags for tag in tags):
+            continue
+
+        # Include if in include folders or has include tags
+        if include_folders and folder in include_folders:
+            filtered.append(scenario)
+        elif include_tags and any(tag in include_tags for tag in tags):
+            filtered.append(scenario)
+        elif not include_folders and not include_tags:
+            # If no include filters set, include everything not excluded
+            filtered.append(scenario)
+
+    print(f"✅ Filtered to {len(filtered)} scenarios matching your criteria")
+    return filtered
+
+
+def categorize_scenarios(scenarios):
+    """Categorize scenarios by type"""
+    categories = {
+        'Lead Management': [],
+        'Sales Automation': [],
+        'Marketing Automation': [],
+        'Customer Service': [],
+        'Reporting & Analytics': [],
+        'Cloud Sync': [],
+        'Other': []
+    }
+
+    for scenario in scenarios:
+        name = scenario.get('name', '').lower()
+
+        if any(word in name for word in ['lead', 'contact', 'prospect']):
+            categories['Lead Management'].append(scenario)
+        elif any(word in name for word in ['sale', 'deal', 'opportunity', 'pipeline']):
+            categories['Sales Automation'].append(scenario)
+        elif any(word in name for word in ['marketing', 'campaign', 'email', 'content']):
+            categories['Marketing Automation'].append(scenario)
+        elif any(word in name for word in ['support', 'ticket', 'customer service', 'help']):
+            categories['Customer Service'].append(scenario)
+        elif any(word in name for word in ['report', 'analytics', 'dashboard', 'metrics']):
+            categories['Reporting & Analytics'].append(scenario)
+        elif any(word in name for word in ['notion', 'sync', 'cloud']):
+            categories['Cloud Sync'].append(scenario)
+        else:
+            categories['Other'].append(scenario)
+
+    return categories
+
+
+def generate_markdown(scenarios, config):
+    """Generate markdown documentation"""
+
+    md = f"""# Make.com Scenarios Index
+
+*Last Updated: {datetime.now().strftime('%Y-%m-%d')}*
+*Auto-generated by fetch-makecom-scenarios.py*
+
+## Overview
+
+This document catalogs all Make.com scenarios for YNA Agentic, filtered by your configuration.
+
+**Total Scenarios**: {len(scenarios)}
+
+---
+
+## Configuration
+
+**Included Folders**: {', '.join(config['makecom']['filters'].get('include_folders', ['All']))}
+**Excluded Folders**: {', '.join(config['makecom']['filters'].get('exclude_folders', ['None']))}
+**Included Tags**: {', '.join(config['makecom']['filters'].get('include_tags', ['All']))}
+
+---
+
+## All Scenarios
+
+| Scenario Name | Trigger | Status | Last Run | Folder |
+|--------------|---------|--------|----------|--------|
+"""
+
+    for scenario in scenarios:
+        name = scenario.get('name', 'Unnamed')
+        trigger = scenario.get('trigger', {}).get('type', 'Unknown')
+        status = '✅ Active' if scenario.get('scheduling', {}).get('type') != 'off' else '⏸️ Paused'
+        last_run = scenario.get('lastRun', 'Never')
+        folder = scenario.get('folder', {}).get('name', 'No Folder')
+
+        md += f"| {name} | {trigger} | {status} | {last_run} | {folder} |\n"
+
+    md += "\n---\n\n"
+
+    # Add categorized view
+    categories = categorize_scenarios(scenarios)
+
+    for category, cat_scenarios in categories.items():
+        if cat_scenarios:
+            md += f"## {category}\n\n"
+            md += "| Scenario Name | Trigger | Purpose | Status |\n"
+            md += "|--------------|---------|---------|--------|\n"
+
+            for scenario in cat_scenarios:
+                name = scenario.get('name', 'Unnamed')
+                trigger = scenario.get('trigger', {}).get('type', 'Unknown')
+                description = scenario.get('description', 'No description')
+                status = '✅' if scenario.get('scheduling', {}).get('type') != 'off' else '⏸️'
+
+                md += f"| {name} | {trigger} | {description} | {status} |\n"
+
+            md += "\n"
+
+    # Add detailed documentation section
+    md += """---
+
+## Detailed Scenario Documentation
+
+For each critical scenario, create detailed documentation:
+
+### Template
+
+```markdown
+## Scenario Name: [Name]
+
+**Scenario ID**: [ID from Make.com]
+**Status**: Active/Paused
+**Folder**: [Folder name]
+**Last Modified**: [Date]
+
+### Purpose
+[What this scenario does and why]
+
+### Trigger
+- **Type**: Webhook/Schedule/Watch
+- **Source**: [Airtable/Clay/etc.]
+- **Condition**: [What triggers it]
+
+### Flow Steps
+1. [Step 1 description]
+2. [Step 2 description]
+3. [Step 3 description]
+
+### Connected Services
+- [Service 1]: [Purpose]
+- [Service 2]: [Purpose]
+
+### Error Handling
+[How errors are handled]
+
+### Notes
+[Any special configuration or notes]
+```
+
+---
+
+## Maintenance
+
+**Update Frequency**: Run `python scripts/fetch-makecom-scenarios.py` daily or when scenarios change
+
+**Manual Additions**: You can add notes and details to scenarios above. The script preserves manual edits between AUTO-GENERATED markers.
+
+---
+
+*To update this file, run: `python scripts/fetch-makecom-scenarios.py`*
+"""
+
+    return md
+
+
+def main():
+    """Main execution"""
+    print("=" * 60)
+    print("Make.com Scenarios Fetcher")
+    print("=" * 60)
+
+    # Load configuration
+    config = load_config()
+
+    if not config['makecom']['enabled']:
+        print("⚠️  Make.com integration is disabled in config")
+        sys.exit(0)
+
+    # Fetch scenarios
+    scenarios = fetch_scenarios(config)
+
+    if not scenarios:
+        print("⚠️  No scenarios found")
+        sys.exit(0)
+
+    # Filter scenarios
+    filtered_scenarios = filter_scenarios(scenarios, config)
+
+    if not filtered_scenarios:
+        print("⚠️  No scenarios match your filters")
+        print("   Check config/integration-filters.json")
+        sys.exit(0)
+
+    # Generate documentation
+    markdown = generate_markdown(filtered_scenarios, config)
+
+    # Write to file
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(OUTPUT_FILE, 'w') as f:
+        f.write(markdown)
+
+    print(f"\n✅ Documentation generated: {OUTPUT_FILE}")
+    print(f"   Total scenarios documented: {len(filtered_scenarios)}")
+
+    # Save JSON backup
+    json_file = OUTPUT_FILE.parent / "scenarios-data.json"
+    with open(json_file, 'w') as f:
+        json.dump(filtered_scenarios, f, indent=2)
+
+    print(f"✅ JSON backup saved: {json_file}")
+    print("\n" + "=" * 60)
+
+
+if __name__ == "__main__":
+    main()
