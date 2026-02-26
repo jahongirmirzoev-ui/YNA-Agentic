@@ -1,35 +1,41 @@
 # YNA Agentic - TODO List
 
-**Last Updated**: 2026-02-26
+**Last Updated**: 2026-02-26 (Post-Privacy Policy Deployment)
 
 ---
 
 ## 🔴 High Priority
 
-### ICP Clarity Website (Priority 1 Tasks)
+### ICP Clarity Website (Immediate User Actions)
 - [x] **🤖 Set up Google Analytics 4 tracking** - GA4 code added to both pages (2026-02-26)
-- [x] **🤖 Create privacy policy page** - GDPR-compliant page created (2026-02-26)
-- [ ] **👤 Replace GA4 placeholder ID** - Change `G-XXXXXXXXXX` to real Measurement ID
-- [ ] **👤 Create favicon images** - 16x16, 32x32, 180x180 PNG files (guide created)
-- [ ] **👤 Create OG image** - 1200x630 JPG for social sharing (guide created)
-- [ ] **👤 Test all changes locally** - Verify GA4, favicons, before deploying
-- [ ] **👤 Deploy to production** - Git push when ready
+- [x] **🤖 Create privacy policy page** - Swedish GDPR-compliant, YNA AB info added (2026-02-26)
+- [x] **🤖 Deploy to production** - Live at icpclarity.com with privacy policy v2.0 (2026-02-26)
+- [ ] **👤 Replace GA4 placeholder ID** - Change `G-XXXXXXXXXX` to real Measurement ID in index.html & assessment.html
+- [ ] **👤 Test live website** - Verify privacy policy, links, GA4 tracking at icpclarity.com
+- [ ] **👤 Create favicon images** - 16x16, 32x32, 180x180 PNG files (guide: FAVICON-CREATION-GUIDE.md)
+- [ ] **👤 Create OG image** - 1200x630 JPG for social sharing (template in guide)
 
-### Business Operations
-- [ ] **Document existing Make.com scenarios** - List all active scenarios with purpose and connections
-- [ ] **Document Clay tables** - Inventory tables, fields, and automations
-- [ ] **Document Airtable bases** - Schema, views, and integrations
-- [ ] **Set up Notion API integration** - Configure credentials and test connection
-- [ ] **Populate department memory.md files** - Add current state for all 5 departments
+### Business Operations (Foundation - Priority 1)
+- [ ] **🤖 Document existing Make.com scenarios** - List all active scenarios with purpose and connections
+- [ ] **🤖 Document Clay tables** - Inventory tables, fields, and automations
+- [ ] **🤖 Document Airtable bases** - Schema, views, and integrations
+- [ ] **🤖 Populate department memory.md files** - Add current state for all 5 departments (Marketing, Sales, Customer Service, CRM, Website)
+- [ ] **👤 Set up Notion API integration** - Configure credentials and test connection (then enables cloud sync)
 
 ---
 
 ## 🟡 Medium Priority
 
-- [ ] **Configure Email/SMTP integration** - Set up credentials and test sending
-- [ ] **Set up Slack webhooks** - Configure notifications and channels
-- [ ] **Configure Analytics (GA4)** - Set up tracking and dashboard access
-- [ ] **Create cloud sync automation** - Set up 15-minute cron job for Notion sync
+### API Integrations
+- [ ] **🤖 Configure Email/SMTP integration** - Set up credentials and test sending (for privacy contact form)
+- [ ] **🤖 Set up Slack webhooks** - Configure notifications and channels (document existing webhooks)
+- [ ] **👤 Configure Analytics (GA4) dashboard** - Set up GA4 account and grant access after ID replacement
+- [ ] **🤖 Create cloud sync automation** - Set up 15-minute cron job for Notion sync (after Notion API configured)
+
+### Documentation & SOPs
+- [ ] **🤖 Create SOP: Privacy Policy Deployment** - Document privacy policy v2.0 implementation process
+- [ ] **🤖 Document webhook registry** - Inventory all active webhooks (Make.com, Clay, Assessment form)
+- [ ] **🤖 Create API integration map** - Visual diagram showing data flow between all systems
 
 ---
 
@@ -53,6 +59,7 @@
 **Completed SOPs**:
 - ✅ Foundation Setup (2026-02-26)
 - ✅ ICP Clarity Website Documentation & GA4 (2026-02-26)
+- 🔄 Privacy Policy v2.0 Deployment (2026-02-26) - *Pending SOP creation*
 
 **Templates Available**:
 - [docs/sops/templates/TECHNICAL_SOP_TEMPLATE.md](../docs/sops/templates/TECHNICAL_SOP_TEMPLATE.md)
@@ -81,10 +88,15 @@
   - Custom events configured (CTA clicks, pricing card clicks)
   - Created ga4-setup-instructions.md guide
   - Created ga4-assessment-events.js for future implementation
-- [x] **ICP Clarity Website - Privacy policy page created**
-  - GDPR-compliant privacy-policy.html with navigation and footer
-  - Footer links updated in index.html and assessment.html
-  - Copyright year updated to 2026
+- [x] **ICP Clarity Website - Privacy policy v2.0 deployed (2026-02-26)**
+  - Swedish GDPR-compliant privacy-policy.html (Dataskyddslag 2018:218)
+  - YNA AB company information: Org# 559508-0770, Jakobsbergsgatan 24, Stockholm
+  - Legal basis mapping for all processing activities (GDPR Art. 6)
+  - 7-year retention policy (Bokföringslagen 2010:1142)
+  - IMY (Swedish Data Protection Authority) contact details
+  - Standard Contractual Clauses for US data transfers
+  - Service provider documentation (Make.com EU2, Clay, Airtable, Slack)
+  - Deployed live to icpclarity.com via Netlify
 - [x] **Infrastructure - Credential registry created**
   - Template for tracking API keys and rotation schedules
   - Documented all services (Make.com, Clay, Airtable, Notion, GA4, Email/SMTP, Slack)

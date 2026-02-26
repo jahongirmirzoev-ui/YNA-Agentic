@@ -91,3 +91,8 @@ yarn-error.log*
 
 # Sensitive execution files (add specific patterns as needed)
 execution/sensitive/
+
+# Time Tracking Data - NEVER commit session data
+.tmp/activity-tracking.db
+.tmp/activity-logs/
+*.jsonl
