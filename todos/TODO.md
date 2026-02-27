@@ -1,6 +1,6 @@
 # YNA Agentic - TODO List
 
-**Last Updated**: 2026-02-26 (Post-Privacy Policy Deployment)
+**Last Updated**: 2026-02-27 (GA4 & Cookie Consent Deployed)
 
 ---
 
@@ -10,8 +10,10 @@
 - [x] **🤖 Set up Google Analytics 4 tracking** - GA4 code added to both pages (2026-02-26)
 - [x] **🤖 Create privacy policy page** - Swedish GDPR-compliant, YNA AB info added (2026-02-26)
 - [x] **🤖 Deploy to production** - Live at icpclarity.com with privacy policy v2.0 (2026-02-26)
-- [ ] **👤 Replace GA4 placeholder ID** - Change `G-XXXXXXXXXX` to real Measurement ID in index.html & assessment.html
-- [ ] **👤 Test live website** - Verify privacy policy, links, GA4 tracking at icpclarity.com
+- [x] **🤖 Replace GA4 placeholder ID** - Configured with G-XB8YMCCGWH (2026-02-27)
+- [x] **🤖 Add cookie consent banner** - Klaro GDPR-compliant consent manager deployed (2026-02-27)
+- [x] **🤖 Create GA4 debug console** - Debug panel available with ?debug=true parameter (2026-02-27)
+- [ ] **👤 Test live website** - Verify privacy policy, links, GA4 tracking, cookie consent at icpclarity.com
 - [ ] **👤 Create favicon images** - 16x16, 32x32, 180x180 PNG files (guide: FAVICON-CREATION-GUIDE.md)
 - [ ] **👤 Create OG image** - 1200x630 JPG for social sharing (template in guide)
 
@@ -112,6 +114,27 @@
   - Generated Technical SOP: ICP Clarity Website & GA4 (20+ pages)
   - Generated Executive SOP: ICP Clarity Website & GA4 (business-focused)
   - All SOPs located in docs/sops/ with templates for future use
+
+### 2026-02-27
+- [x] **ICP Clarity Website - GA4 Configuration Complete**
+  - Replaced placeholder `G-XXXXXXXXXX` with live Measurement ID: `G-XB8YMCCGWH`
+  - Updated both index.html and assessment.html
+  - GA4 tracking now live and collecting data
+  - Deployed to production via Netlify
+- [x] **ICP Clarity Website - Debug Console Added**
+  - Created GA4 debug panel (visible with `?debug=true` parameter)
+  - Shows real-time event tracking (page views, CTA clicks, pricing cards)
+  - Floating console in bottom-right corner
+  - Helps verify GA4 is working without opening DevTools
+- [x] **ICP Clarity Website - Cookie Consent Banner Deployed**
+  - Implemented Klaro consent manager (free, open-source, GDPR-compliant)
+  - Blocks GA4 tracking until user consent
+  - Custom styling matches ICP Clarity brand (dark theme, violet gradient buttons)
+  - Links to privacy policy page
+  - Accept All / Decline / Customize options
+  - 365-day consent storage
+  - Swedish GDPR compliant (Dataskyddslag 2018:218)
+  - Deployed to production on both pages
 
 ---
 
