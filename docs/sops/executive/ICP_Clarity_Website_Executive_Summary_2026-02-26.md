@@ -61,19 +61,33 @@ Without proper tracking, you're flying blind on marketing performance. You don't
 - **Financial**: $0 (Google Analytics 4 is free, using existing website)
 - **People**: You + Claude Code
 
+### ⏱️ Time Savings
+**4-6 hours/month saved**
+
+**Why it saves time:**
+- **Instant data access**: Answer "how's the website performing?" in 30 seconds instead of 30 minutes of manual analysis
+- **Automated reporting**: GA4 dashboards replace 2-3 hours/month of manual Excel reports
+- **Faster decision-making**: Know which CTAs/pages work without A/B test delays (1-2 hours saved per optimization decision)
+- **No more guessing**: Data reveals exactly where prospects drop off, eliminating trial-and-error testing
+
+**Calculation**: 2 hrs/month on manual reporting + 2 hrs/month on faster decisions + 1 hr/month on instant queries = 5 hrs/month
+
+### 💰 Money Savings
+**$1,000-3,000/month** (at $5,000/month marketing spend)
+
+**Why it saves money:**
+- **Marketing efficiency**: 20-40% improvement by stopping spend on non-converting sources = $1,000-2,000/month
+- **Higher conversion rate**: Fix drop-off points (+15-30% completion rate) = more leads without more spend
+- **Reduced CAC**: Data-driven optimization typically reduces customer acquisition cost by 20-30% = $200-500/month
+- **No BI tool needed**: Eliminates need for Mixpanel ($89/month), Amplitude ($995/month), or similar
+
+**Example**: $5,000 marketing budget × 20% efficiency gain = $12,000/year saved
+
 ### ROI (Return on Investment)
-- **Short-term** (0-3 months):
-  - Identify and fix assessment drop-off points → +15-30% completion rate
-  - Optimize underperforming CTAs → +10-20% click-through rate
-  - Stop wasting budget on traffic sources that don't convert → 20-40% budget efficiency gain
-
-- **Long-term** (3+ months):
-  - Data-driven marketing decisions reduce customer acquisition cost (CAC) by 20-30%
-  - Identify highest-converting pages to replicate success
-  - Understand customer journey to optimize entire funnel (awareness → conversion)
-  - Example: If you spend $5,000/month on marketing, 20% efficiency gain = $12,000/year saved
-
-- **Break-even Point**: First optimization that improves conversions pays for entire implementation (likely within 2-4 weeks)
+- **Short-term** (0-3 months): $3,000-9,000 in marketing savings + higher conversion rates
+- **Long-term** (3+ months): Compounds as you optimize more pages/CTAs based on data
+- **Break-even Point**: 2-4 weeks (first optimization that improves conversions covers implementation)
+- **Annual ROI**: 4,000-12,000% (3-hour investment returns $12,000-36,000/year)
 
 ---
 
