@@ -50,10 +50,28 @@
 - **Financial**: [cost if applicable, or "No additional cost"]
 - **People**: [who was involved]
 
+### ⏱️ Time Savings
+**[X hours/week or X hours/month saved]**
+
+**Why it saves time:**
+- [Reason 1: e.g., "Eliminates manual data entry that took 2 hours/week"]
+- [Reason 2: e.g., "Automates report generation from 4 hours to 5 minutes"]
+- [Reason 3: e.g., "Reduces back-and-forth communication by providing self-service access"]
+
+### 💰 Money Savings
+**$[X/month or $X/year saved]**
+
+**Why it saves money:**
+- **Labor cost reduction**: [e.g., "5 hours/week at $100/hr = $2,000/month saved"]
+- **Tool/subscription savings**: [e.g., "Eliminates $500/month SaaS subscription"]
+- **Opportunity cost**: [e.g., "Faster decisions = earlier revenue recognition"]
+- **Waste reduction**: [e.g., "Identifies inefficiencies worth $X/month"]
+
 ### ROI (Return on Investment)
-- **Short-term** (0-3 months): [expected benefits]
-- **Long-term** (3+ months): [expected benefits]
-- **Break-even Point**: [when investment pays off]
+- **Short-term** (0-3 months): [expected benefits with dollar values]
+- **Long-term** (3+ months): [expected benefits with dollar values]
+- **Break-even Point**: [when investment pays off - e.g., "2 months"]
+- **Annual ROI**: [percentage return - e.g., "150% annually"]
 
 ---
 
