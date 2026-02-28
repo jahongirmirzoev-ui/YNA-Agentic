@@ -2,10 +2,19 @@
 
 **Document Type**: Technical Standard Operating Procedure
 **Created**: 2026-02-26
-**Last Updated**: 2026-02-26
+**Last Updated**: 2026-02-28
 **Author**: Claude Code (YNA Agentic)
 **Status**: ✅ Active
 **Audience**: Developers, Technical Implementers, Marketing Operations
+
+## Recent Updates (2026-02-28)
+- ✅ Migrated from Vercel to Netlify hosting
+- ✅ DNS migrated to Netlify nameservers (NSOne)
+- ✅ assessment.html restored to full 164-line version
+- ✅ Clean GA4 implementation (removed Klaro cookie consent)
+- ✅ Make.com webhook active (Clay webhook removed)
+- ✅ netlify.toml configuration added
+- 🔄 DNS propagation in progress (www.icpclarity.com)
 
 ---
 
@@ -41,6 +50,67 @@ Complete comprehensive documentation of the ICP Clarity website (40+ pages) incl
 - **Performance monitoring**: Real-time dashboards vs periodic manual checks (save 2-3 hours/month)
 - **Documentation access**: 5 sec to find webhook URL vs 5 min searching Notion/email
 - **Troubleshooting**: Event logs show exact issue vs trial-and-error debugging (save 1-2 hours per incident)
+
+---
+
+## Hosting & Deployment (Updated 2026-02-28)
+
+### Current Hosting Setup
+**Platform**: Netlify
+**Site ID**: `ba0884a7-7983-47db-a82f-3820826d9e55`
+**Site Name**: `icp-clarity-deploy`
+**Primary URL**: https://www.icpclarity.com (custom domain)
+**Netlify URL**: https://icp-clarity-deploy.netlify.app (fallback)
+
+### DNS Configuration
+**Domain Registrar**: GoDaddy
+**Nameservers**: Netlify DNS (NSOne)
+- `dns1.p04.nsone.net`
+- `dns2.p04.nsone.net`
+- `dns3.p04.nsone.net`
+- `dns4.p04.nsone.net`
+
+**DNS Records** (managed in Netlify):
+- **Primary**: `www.icpclarity.com` → Netlify load balancer
+- **Redirect**: `icpclarity.com` → `www.icpclarity.com`
+- **SSL/TLS**: Automatic HTTPS via Netlify (Let's Encrypt)
+
+### Deployment Configuration
+**Repository**: `jahongirmirzoev-ui/icp-clarity-website` (GitHub)
+**Branch**: `main`
+**Build Command**: None (static site)
+**Publish Directory**: `.` (root)
+**Auto-deploy**: ✅ Enabled on Git push
+
+### netlify.toml Configuration
+```toml
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/assessment"
+  to = "/assessment-new.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/assessment.html"
+  to = "/assessment-new.html"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+```
+
+### Key Files
+- `index.html` - Landing page (with GA4)
+- `assessment-new.html` - Full 164-line assessment page
+- `assessment-standalone.js` - Assessment logic + Make.com webhook
+- `netlify.toml` - Netlify configuration
+- `vercel.json` - Legacy config (not used on Netlify)
 
 ---
 

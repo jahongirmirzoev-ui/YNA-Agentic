@@ -1,6 +1,6 @@
 # Website Department - Memory & Context
 
-*Last Updated: 2026-02-26*
+*Last Updated: 2026-02-28*
 
 ## Department Mission
 
@@ -11,18 +11,22 @@ Maintain a high-performing, user-friendly website that drives lead generation, e
 ## Current State
 
 ### Active Website: ICP Clarity
-**URL**: https://icpclarity.com
-**Platform**: Netlify (Static Site)
-**Status**: ✅ **LIVE**
-**Last Deploy**: February 26, 2026
-**Repository**: Desktop/ICP CLarity Website
+**URL**: https://www.icpclarity.com
+**Netlify URL**: https://icp-clarity-deploy.netlify.app
+**Platform**: Netlify (Static Site) - **Migrated from Vercel on Feb 28, 2026**
+**Status**: ✅ **LIVE** (DNS propagating to Netlify)
+**Last Deploy**: February 28, 2026
+**Repository**: jahongirmirzoev-ui/icp-clarity-website (GitHub)
+**Netlify Site**: icp-clarity-deploy (Site ID: ba0884a7-7983-47db-a82f-3820826d9e55)
+**DNS**: Netlify nameservers (NSOne) via GoDaddy
 
 ### Active Projects
 1. ✅ **ICP Clarity Website v1.0** - LIVE on Netlify
-2. ✅ **Free ICP Assessment Tool** - LIVE and capturing leads
-3. ✅ **Dual Webhook Integration** - Make.com + Clay webhooks active
-4. 🔄 **Google Analytics 4 Setup** - Pending configuration
-5. 🔄 **Missing Visual Assets** - Favicons, OG images to be created
+2. ✅ **Free ICP Assessment Tool** - LIVE with full 164-line form (assessment-new.html)
+3. ✅ **Make.com Webhook Integration** - Active (Clay webhook removed Feb 27)
+4. ✅ **Google Analytics 4 Setup** - Clean gtag.js implementation (Klaro removed)
+5. 🔄 **DNS Propagation** - Netlify nameservers propagating globally
+6. 🔄 **Missing Visual Assets** - Favicons, OG images to be created
 
 ### Key Metrics
 | Metric | Current | Target | Status |
@@ -37,12 +41,15 @@ Maintain a high-performing, user-friendly website that drives lead generation, e
 | Bounce Rate | TBD | <40% | 🔄 Setup |
 
 ### Recent Wins
+- **2026-02-28**: Migrated from Vercel to Netlify (DNS changed to Netlify nameservers) ✅
+- **2026-02-28**: Fixed assessment page - full 164-line form with assessment-standalone.js ✅
+- **2026-02-28**: Removed Klaro cookie consent - clean GA4 gtag.js implementation ✅
+- **2026-02-28**: Added netlify.toml for configuration and cache control ✅
+- **2026-02-27**: Removed expired Clay webhook integration ✅
+- **2026-02-27**: Make.com webhook active and working ✅
 - **2026-02-26**: ICP Clarity website launched on icpclarity.com ✅
 - **2026-02-26**: Complete website documentation created in YNA Agentic ✅
-- **2026-02-26**: Dual webhook integration (Make.com + Clay) deployed ✅
-- **2026-02-26**: Free ICP Assessment tool live and functional ✅
 - **2026-02-25**: Security improvements (CSP, HSTS, webhook proxy) ✅
-- **2026-02-25**: Accessibility compliance achieved (WCAG AA) ✅
 
 ---
 
@@ -111,16 +118,13 @@ node test-webhooks.js  # Tests both Make.com and Clay webhooks
 | From | To | Purpose | Status |
 |------|-----|---------|--------|
 | Assessment Form | Make.com Webhook | Lead automation | ✅ Active |
-| Assessment Form | Clay Webhook | Lead enrichment | ✅ Active |
-| Clay | Airtable | Enriched data export | ✅ Active |
 | Make.com | Slack | Lead notifications | 🔄 To configure |
-| Website | Google Analytics 4 | Traffic tracking | 🔄 Pending |
+| Website | Google Analytics 4 | Traffic tracking | ✅ Active (after consent) |
 
 ### Webhook URLs
 **Make.com**: `https://hook.eu2.make.com/avk8orblmpj250ks7lo229axr9xn93y2`
-**Clay**: `https://api.clay.com/v3/sources/webhook/pull-in-data-from-a-webhook-73b930cc-d726-4a88-bc2d-ae7f737d8f50`
 
-**Security**: Make.com webhook stored in Netlify environment variable `MAKE_WEBHOOK_URL`
+**Note**: Clay webhook was removed on 2026-02-27 due to expired URL (404 error). All lead capture now flows through Make.com only.
 
 ---
 
@@ -175,7 +179,7 @@ Located at: `~/Desktop/"ICP CLarity Website"/`
    - Step 0: Contact info (First/Last name, Email, LinkedIn, Phone)
    - Steps 1-12: ICP assessment questions
    - Results page with score and recommendations
-   - **Webhooks**: Make.com + Clay (dual submission)
+   - **Webhook**: Make.com only (Clay integration removed 2026-02-27)
 
 2. **Contact Form** (Modal - triggered from pricing cards)
    - First/Last name, Email, Phone, LinkedIn
@@ -190,20 +194,20 @@ Located at: `~/Desktop/"ICP CLarity Website"/`
 **Free 3-minute assessment** that scores companies on ICP clarity (0-100 points)
 
 ### Scoring System (NEW_SCORING_100)
-| Category | Max Points | Purpose |
-|----------|------------|---------|
-| ICP Foundation | 20 | How well-defined is ICP |
-| Firmographic Clarity | 20 | Company attributes clarity |
-| Signal Coverage | 25 | Behavioral/intent signal tracking |
-| Process Maturity | 25 | Win/loss analysis, team alignment |
-| Lead Quality | 30 | Lead qualification metrics |
-| Tech Infrastructure | 20 | GTM tech stack maturity |
-| **TOTAL** | **140** | **100 points max** |
+| Category | Max Points | Questions Included |
+|----------|------------|-------------------|
+| ICP Foundation | 15 | Q1 (10) + Q3 (5) |
+| Firmographic Clarity | 10 | Q5 (10) |
+| Signal Coverage | 15 | Q6 (15) |
+| Process Maturity | 20 | Q7 (10) + Q8 (5) + Q12 (5) |
+| Lead Quality | 20 | Q9 (15) + Q10 (5) |
+| GTM Readiness | 20 | Q2 (5) + Q4 (5) + Q11 (10) |
+| **TOTAL** | **100** | **All 12 questions** |
 
 ### Tiers
-- **0-39**: Discovery Phase (just starting, high quick-win potential)
-- **40-69**: Foundation Phase (basics in place, needs validation)
-- **70-100**: Optimization Phase (mature ICP, ongoing refinement)
+- **0-39**: Foundation Phase (building the foundation, clear gaps with actionable steps)
+- **40-69**: Validation Phase (basics in place, time to validate and scale)
+- **70-100**: Optimization Phase (strong ICP clarity, focus on competitive advantage)
 
 ### Data Captured
 - Contact information (name, email, LinkedIn, phone)
@@ -216,22 +220,16 @@ Located at: `~/Desktop/"ICP CLarity Website"/`
 ```
 User completes assessment
     ↓
-Submitted to BOTH webhooks simultaneously:
-    ├─→ Make.com (automation)
-    └─→ Clay (enrichment)
-
+Submitted to Make.com webhook
+    ↓
 Make.com:
-    ├─→ Stores in database
+    ├─→ Stores in database (Airtable)
     ├─→ Sends email confirmation
     ├─→ Notifies sales team (Slack)
     └─→ Triggers nurture sequence
-
-Clay:
-    ├─→ Enriches contact data (Clearbit, Hunter, etc.)
-    ├─→ Adds Nordic data (Allabolag, Proff, Virk)
-    ├─→ Exports to Airtable
-    └─→ Calculates company ICP fit score
 ```
+
+**Note**: Clay enrichment integration was removed 2026-02-27. All lead data now flows through Make.com only.
 
 ---
 
